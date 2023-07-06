@@ -1,0 +1,143 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../styles/fonts/OpenSans-Regular.ttf') format('truetype');
+  }
+  
+  body, main {
+    font-family: 'Open Sans', sans-serif;
+    /* Votre autre style CSS */
+  }
+  
+
+body,main {
+    font-family: 'Open Sans', sans-serif;
+    background-image: linear-gradient(216deg, rgba(77, 77, 77,0.05) 0%, rgba(77, 77, 77,0.05) 25%,rgba(42, 42, 42,0.05) 25%, rgba(42, 42, 42,0.05) 38%,rgba(223, 223, 223,0.05) 38%, rgba(223, 223, 223,0.05) 75%,rgba(36, 36, 36,0.05) 75%, rgba(36, 36, 36,0.05) 100%),linear-gradient(44deg, rgba(128, 128, 128,0.05) 0%, rgba(128, 128, 128,0.05) 34%,rgba(212, 212, 212,0.05) 34%, rgba(212, 212, 212,0.05) 57%,rgba(25, 25, 25,0.05) 57%, rgba(25, 25, 25,0.05) 89%,rgba(135, 135, 135,0.05) 89%, rgba(135, 135, 135,0.05) 100%),linear-gradient(241deg, rgba(55, 55, 55,0.05) 0%, rgba(55, 55, 55,0.05) 14%,rgba(209, 209, 209,0.05) 14%, rgba(209, 209, 209,0.05) 60%,rgba(245, 245, 245,0.05) 60%, rgba(245, 245, 245,0.05) 69%,rgba(164, 164, 164,0.05) 69%, rgba(164, 164, 164,0.05) 100%),linear-gradient(249deg, rgba(248, 248, 248,0.05) 0%, rgba(248, 248, 248,0.05) 32%,rgba(148, 148, 148,0.05) 32%, rgba(148, 148, 148,0.05) 35%,rgba(202, 202, 202,0.05) 35%, rgba(202, 202, 202,0.05) 51%,rgba(181, 181, 181,0.05) 51%, rgba(181, 181, 181,0.05) 100%),linear-gradient(92deg, rgb(0,0,0),rgb(0,0,0));
+    width: 100%;
+    height: 100%;
+    color: white;
+}
+
+.no-padding-margin {
+    margin: 0;
+    padding: 0;
+}
+
+/* NAV BAR */
+.transparent-header {
+    background-color: transparent;
+}
+.text-primary{
+    color: #2563EB;
+}
+.text-warning{
+    color: #f65b07;
+}
+.navbar-toggler-light {
+    color:white;
+}
+
+/* HOME PAGE START*/
+title {
+    font-family: 'Open Sans', sans-serif;
+    color:white;
+}
+
+.full-screen-carousel {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.full-screen-carousel .carousel-inner {
+    height: 100%;
+}
+
+.full-screen-carousel .carousel-item {
+    height: 100%;
+}
+
+.full-screen-carousel .carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.carousel-caption {
+    position: absolute;
+    bottom: 30%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+}
+.red{
+    background-color: #ef0e0e;
+}
+.blue{
+    background-color: #2563EB;
+}
+.orange{
+    background-color: #f65b07;
+}
+.white{
+    background-color: white;
+}
+.imgteam{
+    width: 120px; /* Définissez la largeur souhaitée */
+    object-fit: cover;
+}
+/* HOME PAGE END*/
+
+/*  WATCH ALL MATCHES PAGE START*/
+
+.imgNLF{
+    width: 40%;
+}
+.team-name {
+    word-wrap: break-word;
+    text-align: center;
+}
+
+/*  WATCH ALL MATCHES PAGE END*/
+
+/*  WATCH ONE MATCH PAGE START*/
+
+.rectangle1{
+    padding-bottom: 42px;
+    padding-top: 42px;
+    gap: 10px 10px ;
+}
+
+.rectangle2{
+    padding-bottom: 22px;
+    padding-top: 22px;
+    gap: 10px 10px ;
+}
+
+.rectangle3{
+    height: 80%;
+    width: 100%;
+    padding-bottom: 50px;
+    padding-top: 50px;
+    gap: 10px 10px ;
+
+}
+
+.btn-danger{
+    background-color: #ef0e0e;
+}
+.btn-warning{
+    background-color: #f65b07;
+}
+.btn-primary{
+    background-color: #2563EB;
+}
+/*  WATCH ONE MATCH PAGE END*/
+
+/* BET ALL MATCHES PAGE START*/
+.large-checkbox {
+    transform: scale(2);
+}
+
+/* BET ALL MATCHES PAGE END*/
