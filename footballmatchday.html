@@ -2,11 +2,103 @@
 <html lang="fr-FR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matchs du jour</title>
-</head>
-<body>
-    <h1>Les Matchs du jour </h1>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://127.0.0.1:8000 https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
+    <title>Les Matchs du jour</title>
+  </head>
+  <body>
+        <!-- LOGO START-->
+         <div class="text-center">
+            <img src="img/logo4.png" class="img-fluid" alt="logo superBowl">
+         </div>
+        <!-- LOGO END-->
 
+        <!-- TITTLE START -->
+        <div class=" red mt-5"><h2 class="text-center text-light rectangle2">Les Matchs du Jour</h2></div>
+        <!-- TITTLE END -->
+
+        <!-- FOOTBALLMATCH OF THE DAY START -->
+    <div class="container-fluid">
+        <div class="table-responsive">
+           <table id="sport-bet-table" class="table table-light table-striped table-bordered table-hover">
+             <thead>
+                <tr>
+                   <th class="text-center">Réf</th>
+                   <th class="text-center">Date du Match</th>
+                   <th class="text-center">Heure de début</th>
+                   <th class="text-center">Heure de fin</th>
+                   <th class="text-center">Equipe 1</th>
+                   <th class="text-center">Equipe 2</th>
+                   <th class="text-center">Statut Match</th>
+                   <th></th>
+                </tr>
+             </thead>
+              <tbody id="sport-bet-tbody">
+              </tbody>
+           </table>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+     <!-- FOOTER START -->
+    <script>
+        fetch('footer.html')
+      .then(response => response.text())
+      .then(content => {
+          document.getElementById('footer-container').innerHTML = content;
+      });
+      </script>
+    <!-- FOOTER END -->
+
+    <script>
+
+          function showDetails(matchId) {
+        // Ici, redirige vers la page de détail avec l'id du match en paramètre
+        location.href = `footballmatchdetails.html?matchId=${matchId}`;
+    }
+
+    function closeMatch(matchId) {
+        // Ici, redirige vers la page pour clore le match avec l'id du match en paramètre
+        location.href = `closefootballmatch.html?matchId=${matchId}`;
+    }
+        const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODg3NTQ1NTksImV4cCI6MTY4ODc1ODE1OSwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJjaHJpc3RpbmVtaWtvQGdtYWlsLmNvbSJ9.P3z0fKHrgw1mWM9CmzDEkfEHCbys8i2I2Qz0xFKEzjUCwfKbRIhIKThZO35PjnC2KbVMbkY8nCmWiUDAVCbatKKJ7QCf17gcuRYtoF508VC9Gk1tRpJnSbY2vtbVK4S10tiEYlh_HWX08m9Yc_hsjytra6b1QYJ8SEshbGdfGPnPJwwP02XPV_M1b_PaHKycwap886dYLEaoQDqkTLGOyZpHLZ61YZ4M_UEX4Loov6cG0h7YLl2iX50u3CJ3AK02axDVg8ir2TP56COIFNr_L5s-0j5g3Z5xlRwRDsGKhPdryv3mtESp17kEU8qzAlxy05H9V4FALTVsfeVW4qj6xg";
+    
+        fetch('http://127.0.0.1:8000/api/footballmatches', {
+            headers: {
+                'Authorization': 'Bearer ' + token,
+            }
+        })
+        .then(response => response.json())
+        .then(footballMatches => { 
+            const tbody = document.getElementById('sport-bet-tbody');
+            footballMatches.forEach(footballMatch => { 
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="text-center">${footballMatch.id}</td>
+                    <td class="text-center">${new Date(footballMatch.matchDate).toLocaleDateString()}</td>
+                    <td class="text-center">${new Date(footballMatch.hourStart).toLocaleTimeString()}</td>
+                    <td class="text-center">${new Date(footballMatch.hourFinish).toLocaleTimeString()}</td>
+                    <td class="text-center">${footballMatch.team1.teamName}</td>
+                    <td class="text-center">${footballMatch.team2.teamName}</td>
+                    <td class="text-center">${footballMatch.statut}</td>
+                 
+                    <td class="col-md-2 text-center">
+                    <button class="btn btn-primary" data-id="${footballMatch.id}" onclick="showDetails(this.getAttribute('data-id'))">Détails</button>
+                    <button class="btn btn-danger" data-id="${footballMatch.id}" onclick="closeMatch(this.getAttribute('data-id'))">Clore le match</button>
+                    </td>
+
+                 
+                `;
+                tbody.appendChild(tr);
+            });
+        });
+    </script>
+    
+    
+    <!-- FOOTBALLMATCH OF THE DAY END -->
 </body>
 </html>
