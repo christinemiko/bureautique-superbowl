@@ -2,11 +2,96 @@
 <html lang="fr-FR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://127.0.0.1:8000 https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
     <title>Détails d'un Match</title>
 </head>
 <body>
-    <h1>Détails du Match </h1>
+      <!-- LOGO START-->
+      <div class="text-center">
+        <img src="img/logo4.png" class="img-fluid" alt="logo superBowl">
+     </div>
+    <!-- LOGO END-->
+
+    <!-- TITTLE START -->
+    <div class=" blue mt-5"><h2 class="text-center text-light rectangle2">Détails d'un Match</h2></div>
+    <!-- TITTLE END -->
+
+     <!-- FOOTBALLMATCH DETAIL START -->
+    <div class="container-fluid">
+        <div class="table-responsive">
+           <table id="sport-bet-table" class="table table-light table-striped table-bordered table-hover">
+             <thead>
+                <tr>
+                   <th class="text-center">Heure de début</th>
+                   <th class="text-center">Heure de fin</th>
+                   <th class="text-center">Score du Match</th>
+                   <th class="text-center">Equipe 1</th>
+                   <th class="text-center">Cote de l'équipe 1</th>
+                   <th class="text-center">Nb de paris sur l'équipe 1</th>
+                   <th class="text-center">Equipe 2</th>
+                   <th class="text-center">Cote de l'équipe 2</th>
+                   <th class="text-center">Nb de paris sur l'équipe 2</th>
+                   <th class="text-center">Commentaires</th>
+                   <th></th>
+                </tr>
+             </thead>
+              <tbody id="footballmatch-detail-tbody">
+              </tbody>
+           </table>
+        </div>
+    </div>
+
+    <div id="footer-container"></div>
+
+     <!-- FOOTER START -->
+    <script>
+        fetch('footer.html')
+      .then(response => response.text())
+      .then(content => {
+          document.getElementById('footer-container').innerHTML = content;
+      });
+      </script>
+    <!-- FOOTER END -->
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const matchId = urlParams.get('matchId');
+
+             const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODg3NTkxNTksImV4cCI6MTY4ODc2Mjc1OSwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJjaHJpc3RpbmVtaWtvQGdtYWlsLmNvbSJ9.OWI8MihLK0j7eGg25g3fdtnnIM_Tlf_uo-r_kjVokavJxRitBa5jnl5rLfj360-gbunItqQvO5I4NimJC7OTgCiO-nAGFve8oPIFqGuG5-jYfMHCS_aLIMEE0FwHzGgoptMH25lNg6FRxwF_e9Rj7PEEIyspd2aCXOflYoloLULqOB0zl09nEWtsokBxOWM-DO20XW-UeZdjKPK4U0FXEioT3j8mgVX6PxkXJIz9ZqjqOOgQn5XNFmyWhlp7k5pDZ28Ef6_djVto0EdeWeicR177LHbZ4fKHWpyy1imhrWPNnbNub96zkHSVNfcV4tpPKVnJKAKviCev2lC2Y_OiPA";
+    
+        fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}`, {
+
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    })
+    .then(response => response.json())
+    .then(footballMatch => { 
+    const tbody = document.getElementById('footballmatch-detail-tbody');
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td class="text-center">${new Date(footballMatch.hourStart).toLocaleTimeString()}</td>
+        <td class="text-center">${new Date(footballMatch.hourFinish).toLocaleTimeString()}</td>
+        <td class="text-center">${footballMatch.scoreGame}</td>
+        <td class="text-center">${footballMatch.team1.teamName}</td>
+        <td class="text-center">${footballMatch.team1.oddsteam}</td>
+        <td class="text-center">${footballMatch.team1.numberOfBets}</td>
+        <td class="text-center">${footballMatch.team2.teamName}</td>
+        <td class="text-center">${footballMatch.team2.oddsteam}</td>
+        <td class="text-center">${footballMatch.team2.numberOfBets}</td>
+        <td class="text-center">${footballMatch.comments}</td>
+    `;
+     tbody.appendChild(tr);
+    });
+
+  
+</script>
+  
+    <!-- FOOTBALLMATCH DETAIL END -->
 
 </body>
 </html>
