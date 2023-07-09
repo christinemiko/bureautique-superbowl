@@ -172,7 +172,10 @@
     })
     .then(data => {
         console.log("Match mis à jour", data);
-        // Mettez à jour l'interface utilisateur ici si nécessaire
+        // Mets à jour l'interface utilisateur ici si nécessaire
+
+        // Redirige vers la page footballmatchday.html
+        window.location.href = "footballmatchday.html";
     })
     .catch(error => {
         console.error("Une erreur est survenue:", error);
