@@ -10,6 +10,9 @@
     <title>Détails d'un Match</title>
 </head>
 <body>
+
+    <a href="footballmatchday.html"> Retour Accueil</a>
+
       <!-- LOGO START-->
       <div class="text-center">
         <img src="img/logo4.png" class="img-fluid" alt="logo superBowl">
@@ -61,36 +64,70 @@
         const urlParams = new URLSearchParams(window.location.search);
         const matchId = urlParams.get('matchId');
 
-             const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODg3NTkxNTksImV4cCI6MTY4ODc2Mjc1OSwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJjaHJpc3RpbmVtaWtvQGdtYWlsLmNvbSJ9.OWI8MihLK0j7eGg25g3fdtnnIM_Tlf_uo-r_kjVokavJxRitBa5jnl5rLfj360-gbunItqQvO5I4NimJC7OTgCiO-nAGFve8oPIFqGuG5-jYfMHCS_aLIMEE0FwHzGgoptMH25lNg6FRxwF_e9Rj7PEEIyspd2aCXOflYoloLULqOB0zl09nEWtsokBxOWM-DO20XW-UeZdjKPK4U0FXEioT3j8mgVX6PxkXJIz9ZqjqOOgQn5XNFmyWhlp7k5pDZ28Ef6_djVto0EdeWeicR177LHbZ4fKHWpyy1imhrWPNnbNub96zkHSVNfcV4tpPKVnJKAKviCev2lC2Y_OiPA";
+        const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODg5MzE2MzUsImV4cCI6MTY4ODkzNTIzNSwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJjaHJpc3RpbmVtaWtvQGdtYWlsLmNvbSJ9.IEzS4eh7q3frFHWBrFfiVm2OJqPYQMI5Wwm4tBbqD5S963vIgsAYPrULhcGITM5yvD8QVYD0SWWLonslynlC7VeJNN6os0OHgLBfUQP2-Xnp8rGfOhR2xxEcqsiuXdwyx8zdM7Ba_BYQmpoZindxIoG7muT37aUid7G6aTrPw1NEoYnae-WPx_rxi8LvcyZfGHoy88KH5kGvZJdzkNZaUMWLc87NxZ83R_ahoymVuXnJcTCFvvLuGGAY2npg7C8ld0fD2Di04S-jer7TPuPq4TM7yMbSe7ikObV5zu224Q_Ymr3B1VEY6LCIiLwPM33MtvQPWO_Fe3kWTb-XzGW3Jw";
     
-        fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}`, {
+        let footballMatchData = null; // Initialisez une variable pour stocker les données de footballMatch.
+        let userCountsTeam1 = null; // Variable pour les données d'userCounts pour l'équipe 1.
+        let userCountsTeam2 = null; // Variable pour les données d'userCounts pour l'équipe 2.
 
+        fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}`, {
+         headers: {
+        'Authorization': 'Bearer ' + token,
+         }
+       })
+
+        .then(response => response.json())
+        .then(footballMatch => {
+
+        // Stockez les données de footballMatch pour les utiliser plus tard.
+        footballMatchData = footballMatch;
+
+       // Effectue une autre requête pour obtenir les compteurs d'utilisateurs.
+       return fetch(`http://127.0.0.1:8000/api/match/${footballMatchData.id}/team/${footballMatchData.team1.id}/usersCount`, {
         headers: {
             'Authorization': 'Bearer ' + token,
         }
+      });
     })
     .then(response => response.json())
-    .then(footballMatch => { 
+    .then(userCountsData => {
+
+    // Stockez les données d'userCounts pour les utiliser plus tard.
+    userCountsTeam1 = userCountsData;
+
+     // Deuxième fetch pour l'équipe 2.
+     return fetch(`http://127.0.0.1:8000/api/match/${footballMatchData.id}/team/${footballMatchData.team2.id}/usersCount`, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    });
+})
+.then(response => response.json())
+.then(userCountsData => {
+    userCountsTeam2 = userCountsData;
+
+    // Maintenant que vous avez les données d'userCounts et de footballMatch, vous pouvez les utiliser ici pour remplir votre tableau.
     const tbody = document.getElementById('footballmatch-detail-tbody');
     const tr = document.createElement('tr');
     tr.innerHTML = `
-        <td class="text-center">${new Date(footballMatch.hourStart).toLocaleTimeString()}</td>
-        <td class="text-center">${new Date(footballMatch.hourFinish).toLocaleTimeString()}</td>
-        <td class="text-center">${footballMatch.scoreGame}</td>
-        <td class="text-center">${footballMatch.team1.teamName}</td>
-        <td class="text-center">${footballMatch.team1.oddsteam}</td>
-        <td class="text-center">${footballMatch.team1.numberOfBets}</td>
-        <td class="text-center">${footballMatch.team2.teamName}</td>
-        <td class="text-center">${footballMatch.team2.oddsteam}</td>
-        <td class="text-center">${footballMatch.team2.numberOfBets}</td>
-        <td class="text-center">${footballMatch.comments}</td>
+        <td class="text-center">${new Date(footballMatchData.hourStart).toLocaleTimeString()}</td>
+        <td class="text-center">${new Date(footballMatchData.hourFinish).toLocaleTimeString()}</td>
+        <td class="text-center">${footballMatchData.scoreGame}</td>
+        <td class="text-center">${footballMatchData.team1.teamName}</td>
+        <td class="text-center">${footballMatchData.team1.oddsteam}</td>
+        <td class="text-center">${userCountsTeam1.userCountForTeamInMatch}</td>
+        <td class="text-center">${footballMatchData.team2.teamName}</td>
+        <td class="text-center">${footballMatchData.team2.oddsteam}</td>
+        <td class="text-center">${userCountsTeam2.userCountForTeamInMatch}</td> <!-- Autre compteur pour l'équipe 2 -->
+        <td class="text-center">${footballMatchData.comments}</td>
     `;
-     tbody.appendChild(tr);
+    tbody.appendChild(tr);
+    })
+    .catch(error => {
+    console.error('Il y a eu un problème avec l\'opération fetch:', error);
     });
-
-  
+ 
 </script>
-  
     <!-- FOOTBALLMATCH DETAIL END -->
 
 </body>

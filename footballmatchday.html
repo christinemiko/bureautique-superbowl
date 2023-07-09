@@ -61,11 +61,11 @@
         location.href = `footballmatchdetails.html?matchId=${matchId}`;
     }
 
-    function closeMatch(matchId) {
+         function closeMatch(matchId) {
         // Ici, redirige vers la page pour clore le match avec l'id du match en paramètre
         location.href = `closefootballmatch.html?matchId=${matchId}`;
     }
-        const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODg3NTkxNTksImV4cCI6MTY4ODc2Mjc1OSwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJjaHJpc3RpbmVtaWtvQGdtYWlsLmNvbSJ9.OWI8MihLK0j7eGg25g3fdtnnIM_Tlf_uo-r_kjVokavJxRitBa5jnl5rLfj360-gbunItqQvO5I4NimJC7OTgCiO-nAGFve8oPIFqGuG5-jYfMHCS_aLIMEE0FwHzGgoptMH25lNg6FRxwF_e9Rj7PEEIyspd2aCXOflYoloLULqOB0zl09nEWtsokBxOWM-DO20XW-UeZdjKPK4U0FXEioT3j8mgVX6PxkXJIz9ZqjqOOgQn5XNFmyWhlp7k5pDZ28Ef6_djVto0EdeWeicR177LHbZ4fKHWpyy1imhrWPNnbNub96zkHSVNfcV4tpPKVnJKAKviCev2lC2Y_OiPA";
+        const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODg5MzE2MzUsImV4cCI6MTY4ODkzNTIzNSwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJjaHJpc3RpbmVtaWtvQGdtYWlsLmNvbSJ9.IEzS4eh7q3frFHWBrFfiVm2OJqPYQMI5Wwm4tBbqD5S963vIgsAYPrULhcGITM5yvD8QVYD0SWWLonslynlC7VeJNN6os0OHgLBfUQP2-Xnp8rGfOhR2xxEcqsiuXdwyx8zdM7Ba_BYQmpoZindxIoG7muT37aUid7G6aTrPw1NEoYnae-WPx_rxi8LvcyZfGHoy88KH5kGvZJdzkNZaUMWLc87NxZ83R_ahoymVuXnJcTCFvvLuGGAY2npg7C8ld0fD2Di04S-jer7TPuPq4TM7yMbSe7ikObV5zu224Q_Ymr3B1VEY6LCIiLwPM33MtvQPWO_Fe3kWTb-XzGW3Jw";
     
         fetch('http://127.0.0.1:8000/api/footballmatches', {
             headers: {
@@ -85,6 +85,7 @@
                     <td class="text-center">${footballMatch.team1.teamName}</td>
                     <td class="text-center">${footballMatch.team2.teamName}</td>
                     <td class="text-center">${footballMatch.statut}</td>
+                  
                  
                     <td class="col-md-2 text-center">
                     <button class="btn btn-primary" data-id="${footballMatch.id}" onclick="showDetails(this.getAttribute('data-id'))">Détails</button>
