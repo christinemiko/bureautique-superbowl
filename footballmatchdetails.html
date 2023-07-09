@@ -64,7 +64,8 @@
         const urlParams = new URLSearchParams(window.location.search);
         const matchId = urlParams.get('matchId');
 
-        const token ="eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE2ODg5MzE2MzUsImV4cCI6MTY4ODkzNTIzNSwicm9sZXMiOlsiUk9MRV9DTElFTlQiLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJjaHJpc3RpbmVtaWtvQGdtYWlsLmNvbSJ9.IEzS4eh7q3frFHWBrFfiVm2OJqPYQMI5Wwm4tBbqD5S963vIgsAYPrULhcGITM5yvD8QVYD0SWWLonslynlC7VeJNN6os0OHgLBfUQP2-Xnp8rGfOhR2xxEcqsiuXdwyx8zdM7Ba_BYQmpoZindxIoG7muT37aUid7G6aTrPw1NEoYnae-WPx_rxi8LvcyZfGHoy88KH5kGvZJdzkNZaUMWLc87NxZ83R_ahoymVuXnJcTCFvvLuGGAY2npg7C8ld0fD2Di04S-jer7TPuPq4TM7yMbSe7ikObV5zu224Q_Ymr3B1VEY6LCIiLwPM33MtvQPWO_Fe3kWTb-XzGW3Jw";
+        // stocke le jeton pour lauthentification
+        const token = localStorage.getItem('jwt');
     
         let footballMatchData = null; // Initialisez une variable pour stocker les données de footballMatch.
         let userCountsTeam1 = null; // Variable pour les données d'userCounts pour l'équipe 1.

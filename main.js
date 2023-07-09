@@ -13,7 +13,7 @@ const createWindow = () => {
   });
 
   // et chargement du login.html de l'application.
-  mainWindow.loadFile('footballmatchday.html');
+  mainWindow.loadFile('login.html');
 
   // Ouvrir les outils de développement.
   // mainWindow.webContents.openDevTools()
