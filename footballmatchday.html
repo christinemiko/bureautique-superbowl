@@ -65,8 +65,27 @@
         // Ici, redirige vers la page pour clore le match avec l'id du match en paramètre
         location.href = `closefootballmatch.html?matchId=${matchId}`;
     }
+        // import jose pour token
+        const jose = require('jose');
+
         // stocke le jeton pour lauthentification
         const token = localStorage.getItem('jwt');
+
+        // gestion role sportcaster
+        if (token) {
+
+        const decodedToken = jose.decodeJwt(token);
+
+        if (!decodedToken.roles || !decodedToken.roles.includes('ROLE_SPORTSCASTER')) {
+
+        // L'utilisateur n'a pas le bon rôle, redirigez-le vers la page de connexion ou affichez un message d'erreur
+        window.location.href = 'login.html';
+
+        }
+        } else {
+        // Pas de token, redirigez l'utilisateur vers la page de connexion
+        window.location.href = 'login.html';
+        }
 
         fetch('http://127.0.0.1:8000/api/footballmatches', {
             headers: {
