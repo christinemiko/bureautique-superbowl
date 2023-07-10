@@ -164,7 +164,7 @@
       document.getElementById('team2-cote').textContent = "Cote de l'équipe: " + footballMatchData.team2.oddsteam;
      })
 
-     document.getElementById('closefootballmatch-form').addEventListener('submit', function(e) {
+     document.getElementById('closefootballmatch-form').addEventListener('submit', async function(e) {
      e.preventDefault();  // Empêche le formulaire d'être soumis de la manière habituelle
 
     let status = document.getElementById("matchStatus").value;
@@ -174,7 +174,7 @@
         'statut': status,
         'hourFinish': hourFinish
     }
-
+    // START Modifie Football match sur statut et hourfinish //
     fetch(`http://127.0.0.1:8000/api/patchfootballmatch/${matchId}`, {
         method: 'PATCH',  // Utilisez la méthode 'PATCH'
         headers: {
@@ -189,9 +189,71 @@
         }
         return response.json();
     })
-    .then(data => {
-        console.log("Match mis à jour", data);
-        // Mets à jour l'interface utilisateur ici si nécessaire
+    .then(async data => {
+        console.log("Match mis à jour", data); // Mets à jour l'interface utilisateur ici si nécessaire
+    // END Modifie Football match sur statut et hourfinish // 
+
+    // START Modifie les gains du User si équipe gagnante //
+
+    // Si le match est terminé, calculer les gains
+    if (updatedMatch.statut === 'Terminé') {
+    const scores = updatedMatch.scoregame.split('_');
+    const team1Score = parseInt(scores[0]);
+    const team2Score = parseInt(scores[1]);
+
+    // Déterminer quelle équipe a gagné
+    let winningTeam;
+    if (team1Score > team2Score) {
+        winningTeam = 1;
+    } else if (team1Score < team2Score) {
+        winningTeam = 2;
+    } else {
+        winningTeam = null; // match nul
+    }
+
+    // Récupérer les paris pour ce match
+    const betsResponse = await fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}/sportbets`, {
+        headers: {
+            'Authorization': 'Bearer ' + token,
+        }
+    });
+
+    if (!betsResponse.ok) {
+        throw new Error('Erreur lors de la récupération des paris');
+    }
+
+    const bets = await betsResponse.json();
+
+    for (let bet of bets) {
+        // Initier moneyGain et moneyLose à null
+        let moneyGain = null;
+        let moneyLose = null;
+
+        if (bet.team === winningTeam) {
+            // L'utilisateur a choisi la bonne équipe
+            const wagerMade = bet.wagerMade;
+            const oddsteam = winningTeam === 1 ? footballMatchData.team1.oddsteam : footballMatchData.team2.oddsteam;
+            moneyGain = wagerMade * oddsteam;
+        } else if (winningTeam !== null) { // Si ce n'est pas un match nul et que l'utilisateur a choisi la mauvaise équipe
+            moneyLose = bet.wagerMade;
+        }
+
+        // Mettre à jour le pari avec les gains
+        const updateResponse = await fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}/patchsportbets`, {
+            method: 'PATCH',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ moneyGain, moneyLose }),
+        });
+
+        if (!updateResponse.ok) {
+            console.log('Erreur lors de la mise à jour du pari', bet.id, await updateResponse.text());
+        }
+    }
+}
+       //END Modifie les gains du User si équipe gagnante //
 
         // Redirige vers la page footballmatchday.html
         window.location.href = "footballmatchday.html";
