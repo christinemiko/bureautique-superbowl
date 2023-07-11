@@ -174,7 +174,7 @@
         'statut': status,
         'hourFinish': hourFinish
     }
-    // START Modifie Football match sur statut et hourfinish //
+    // *** START Modifie Football match sur statut et hourfinish *** //
     fetch(`http://127.0.0.1:8000/api/patchfootballmatch/${matchId}`, {
         method: 'PATCH',  // Utilisez la méthode 'PATCH'
         headers: {
@@ -189,11 +189,12 @@
         }
         return response.json();
     })
-    .then(async data => {
-        console.log("Match mis à jour", data); // Mets à jour l'interface utilisateur ici si nécessaire
-    // END Modifie Football match sur statut et hourfinish // 
+    .then(async updatedMatch => {
+        console.log("Match mis à jour", updatedMatch); // Mets à jour l'interface utilisateur ici si nécessaire
+       
+    //*** END Modifie Football match sur statut et hourfinish *** // 
 
-    // START Modifie les gains du User si équipe gagnante //
+    //*** START Modifie les gains du User si équipe gagnante *** //
 
     // Si le match est terminé, calculer les gains
     if (updatedMatch.statut === 'Terminé') {
@@ -211,8 +212,9 @@
         winningTeam = null; // match nul
     }
 
-    // Récupérer les paris pour ce match
-    const betsResponse = await fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}/sportbets`, {
+   
+      // Récupérer les paris pour ce match
+      const betsResponse = await fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}/getsportbets`, {
         headers: {
             'Authorization': 'Bearer ' + token,
         }
