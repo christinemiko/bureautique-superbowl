@@ -2,7 +2,7 @@
 <html lang="fr-FR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://127.0.0.1:8000 https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://super-bowl.christine-chau-projets.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
     crossorigin="anonymous">
@@ -140,7 +140,7 @@
         // Pour obtenir la valeur sélectionnée :
         let status = document.getElementById("matchStatus").value;
 
-        fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}`, {
+        fetch(`https://super-bowl.christine-chau-projets.com/api/footballmatch/${matchId}`, {
          method: 'GET',  // Utilisez la méthode 'GET'
          headers: {
         'Authorization': 'Bearer ' + token,
@@ -176,7 +176,7 @@
         'hourFinish': hourFinish
     }
     // *** START Modifie Football match sur statut et hourfinish *** //
-    fetch(`http://127.0.0.1:8000/api/patchfootballmatch/${matchId}`, {
+    fetch(`https://super-bowl.christine-chau-projets.com/api/patchfootballmatch/${matchId}`, {
         method: 'PATCH',  // Utilisez la méthode 'PATCH'
         headers: {
             'Authorization': 'Bearer ' + token,

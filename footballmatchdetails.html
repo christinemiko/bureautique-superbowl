@@ -2,7 +2,7 @@
 <html lang="fr-FR">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://127.0.0.1:8000 https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://super-bowl.christine-chau-projets.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://stackpath.bootstrapcdn.com">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
     crossorigin="anonymous">
@@ -39,7 +39,7 @@
                    <th class="text-center">Cote de l'équipe 2</th>
                    <th class="text-center">Nb de paris sur l'équipe 2</th>
                    <th class="text-center">Commentaires</th>
-                   <th></th>
+                
                 </tr>
              </thead>
               <tbody id="footballmatch-detail-tbody">
@@ -89,7 +89,7 @@
         let userCountsTeam1 = null; // Variable pour les données d'userCounts pour l'équipe 1.
         let userCountsTeam2 = null; // Variable pour les données d'userCounts pour l'équipe 2.
 
-        fetch(`http://127.0.0.1:8000/api/footballmatch/${matchId}`, {
+        fetch(`https://super-bowl.christine-chau-projets.com/api/footballmatch/${matchId}`, {
          headers: {
         'Authorization': 'Bearer ' + token,
          }
@@ -102,7 +102,7 @@
         footballMatchData = footballMatch;
 
        // Effectue une autre requête pour obtenir les compteurs d'utilisateurs.
-       return fetch(`http://127.0.0.1:8000/api/match/${footballMatchData.id}/team/${footballMatchData.team1.id}/usersCount`, {
+       return fetch(`https://super-bowl.christine-chau-projets.com/api/match/${footballMatchData.id}/team/${footballMatchData.team1.id}/usersCount`, {
         headers: {
             'Authorization': 'Bearer ' + token,
         }
@@ -115,7 +115,7 @@
     userCountsTeam1 = userCountsData;
 
      // Deuxième fetch pour l'équipe 2.
-     return fetch(`http://127.0.0.1:8000/api/match/${footballMatchData.id}/team/${footballMatchData.team2.id}/usersCount`, {
+     return fetch(`https://super-bowl.christine-chau-projets.com/api/match/${footballMatchData.id}/team/${footballMatchData.team2.id}/usersCount`, {
         headers: {
             'Authorization': 'Bearer ' + token,
         }
